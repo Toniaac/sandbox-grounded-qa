@@ -10,7 +10,7 @@ from sys import settrace
 
 import cohere
 
-from qa.answer import answer_with_search
+from qa.answer import answer_with_search, answer_with_paper
 from qa.model import get_contextual_search_query
 from qa.util import pretty_print
 
@@ -39,13 +39,20 @@ class GroundedQaBot():
         history = "\n".join(self.chat_history[-6:])
         question = get_contextual_search_query(history, self._co, verbosity=verbosity)
 
-        answer_text, source_urls, source_texts = answer_with_search(question,
-                                                                    self._co,
-                                                                    self._serp_api_key,
+        # answer_text, source_urls, source_texts = answer_with_search(question,
+        #                                                             self._co,
+        #                                                             self._serp_api_key,
+        #                                                             verbosity=verbosity,
+        #                                                             url=url,
+        #                                                             model=model,
+        #                                                             n_paragraphs=n_paragraphs)
+        answer_text, source_urls, source_texts = answer_with_paper(question,
+                                                                    paper_pii = "S1359645421009137",
+                                                                    co = self._co,
                                                                     verbosity=verbosity,
                                                                     url=url,
                                                                     model=model,
-                                                                    n_paragraphs=n_paragraphs)
+                                                                    n_paragraphs=n_paragraphs)                                                                    
 
         self._chat_history.append("bot: " + answer_text)
 

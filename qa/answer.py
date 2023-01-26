@@ -67,7 +67,7 @@ def answer_with_search(question,
                        co,
                        serp_api_token,
                        chat_history="",
-                       model='command-xlarge-20221108',
+                       model='command-xlarge-nightly',
                        embedding_model="multilingual-22-12",
                        url=None,
                        n_paragraphs=1,
@@ -100,11 +100,11 @@ def answer_with_paper(question,
                         paper_pii,
                         co,
                         chat_history="",
-                        model='command-xlarge-20221108',
+                        model='command-xlarge-nightly',
                         embedding_model="multilingual-22-12",
                         url=None,
                         n_paragraphs=1,
-                        verbosity=0):
+                        verbosity=2):
     """Generates completion based on search results."""
 
     paragraphs, paragraph_sources = get_results_paragraphs_from_paper(paper_pii)

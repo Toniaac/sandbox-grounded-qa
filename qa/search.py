@@ -175,11 +175,10 @@ def get_results_paragraphs_from_paper(paper_pii):
     a list, which is returned.
     """
     df = pd.read_csv(paper_pii+'.csv')
-    paragraphs = []
+    paragraphs = list(df['paragraphs'])
     paragraph_sources = []
     for i in range(len(df)):
-        paragraphs += df['paragraphs'][i]
-        paragraph_sources += [df['titles'][i]]
+        paragraph_sources += df['paragraphs'][i]
     return paragraphs, paragraph_sources
 
 
