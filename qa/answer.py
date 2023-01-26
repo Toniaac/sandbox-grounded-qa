@@ -9,7 +9,7 @@
 import numpy as np
 
 from qa.model import get_sample_answer
-from qa.search import embedding_search, get_results_paragraphs_multi_process
+from qa.search import embedding_search, get_results_paragraphs_multi_process, get_results_paragraphs_from_paper
 from qa.util import pretty_print
 
 
@@ -75,6 +75,39 @@ def answer_with_search(question,
     """Generates completion based on search results."""
 
     paragraphs, paragraph_sources = get_results_paragraphs_multi_process(question, serp_api_token, url=url)
+    if not paragraphs:
+        return ("", "", "")
+    sample_answer = get_sample_answer(question, co)
+
+    results = embedding_search(paragraphs, paragraph_sources, sample_answer, co, model=embedding_model)
+
+    if verbosity > 1:
+        pprint_results = "\n".join([r[0] for r in results])
+        pretty_print("OKGREEN", f"all search result context: {pprint_results}")
+
+    results = results[-n_paragraphs:]
+    context = "\n".join([r[0] for r in results])
+
+    if verbosity:
+        pretty_print("OKCYAN", "relevant result context: " + context)
+
+    response = answer(question, context, co, chat_history=chat_history, model=model)
+
+    return (response, [r[1] for r in results], [r[0] for r in results])
+
+
+def answer_with_paper(question, 
+                        paper_pii,
+                        co,
+                        chat_history="",
+                        model='command-xlarge-20221108',
+                        embedding_model="multilingual-22-12",
+                        url=None,
+                        n_paragraphs=1,
+                        verbosity=0):
+    """Generates completion based on search results."""
+
+    paragraphs, paragraph_sources = get_results_paragraphs_from_paper(paper_pii)
     if not paragraphs:
         return ("", "", "")
     sample_answer = get_sample_answer(question, co)

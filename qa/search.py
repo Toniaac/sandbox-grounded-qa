@@ -11,7 +11,7 @@ import sys
 import urllib.request
 from functools import lru_cache
 from multiprocessing import Pool, TimeoutError
-
+import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 from serpapi import GoogleSearch
@@ -164,6 +164,22 @@ def get_results_paragraphs_multi_process(search_term, serp_api_token, url=None):
     for i in range(len(url_paragraphs)):
         paragraphs += url_paragraphs[i]
         paragraph_sources += [urls[i]] * len(url_paragraphs[i])
+    return paragraphs, paragraph_sources
+
+def get_results_paragraphs_from_paper(paper_pii):
+    """Given a query, retrieve relevant paragraphs from the search results.
+    
+    This function will first search for documents matching a query. Then, for
+    each document amongst the most relevant documents in that set, it will find
+    the paragraph which most closely matches the query, and aggregate those in
+    a list, which is returned.
+    """
+    df = pd.read_csv(paper_pii+'.csv')
+    paragraphs = []
+    paragraph_sources = []
+    for i in range(len(df)):
+        paragraphs += df['paragraphs'][i]
+        paragraph_sources += [df['titles'][i]]
     return paragraphs, paragraph_sources
 
 
