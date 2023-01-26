@@ -178,7 +178,7 @@ def get_results_paragraphs_from_paper(paper_pii):
     paragraphs = list(df['paragraphs'])
     paragraph_sources = []
     for i in range(len(df)):
-        paragraph_sources += df['paragraphs'][i]
+        paragraph_sources.append(df['paragraphs'][i])
     return paragraphs, paragraph_sources
 
 

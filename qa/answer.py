@@ -104,7 +104,7 @@ def answer_with_paper(question,
                         embedding_model="multilingual-22-12",
                         url=None,
                         n_paragraphs=1,
-                        verbosity=2):
+                        verbosity=0):
     """Generates completion based on search results."""
 
     paragraphs, paragraph_sources = get_results_paragraphs_from_paper(paper_pii)
