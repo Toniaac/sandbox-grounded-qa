@@ -31,7 +31,7 @@ class GroundedQaBot():
     def set_chat_history(self, chat_history):
         self._chat_history = chat_history
 
-    def answer(self, question, verbosity=0, n_paragraphs=1, url=None, model='xlarge'):
+    def answer(self, question, verbosity=0, n_paragraphs=1, model='xlarge'):
         """Answer a question, based on recent conversational history."""
 
         self.chat_history.append("user: " + question)
@@ -50,7 +50,6 @@ class GroundedQaBot():
                                                                     paper_pii = "S1359645421009137",
                                                                     co = self._co,
                                                                     verbosity=verbosity,
-                                                                    url=url,
                                                                     model=model,
                                                                     n_paragraphs=n_paragraphs)                                                                    
 
