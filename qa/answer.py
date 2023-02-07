@@ -102,7 +102,7 @@ def answer_with_paper(question,
                         co,
                         chat_history="",
                         model='command-xlarge-nightly',
-                        embedding_model="multilingual-22-12",
+                        embedding_model="multilingual-22-12",,
                         n_paragraphs=1,
                         verbosity=0):
     """Generates completion based on search results."""
