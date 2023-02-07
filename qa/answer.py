@@ -9,7 +9,7 @@
 import numpy as np
 
 from qa.model import get_sample_answer
-from qa.search import embedding_search, get_results_paragraphs_multi_process
+from qa.search import embedding_search, get_results_paragraphs_multi_process, get_results_paragraphs_from_paper
 from qa.util import pretty_print
 
 
@@ -94,7 +94,6 @@ def answer_with_search(question,
     response = answer(question, context, co, chat_history=chat_history, model=model)
 
     return (response, [r[1] for r in results], [r[0] for r in results])
-<<<<<<< HEAD
 
 
 def answer_with_paper(question, 
@@ -126,5 +125,3 @@ def answer_with_paper(question,
     response = answer(question, context, co, chat_history=chat_history, model=model)
 
     return (response, [r[1] for r in results], [r[0] for r in results])
-=======
->>>>>>> parent of 8978d6c (udpated)
