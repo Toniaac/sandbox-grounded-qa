@@ -11,7 +11,7 @@ import sys
 import urllib.request
 from functools import lru_cache
 from multiprocessing import Pool, TimeoutError
-
+import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 from serpapi import GoogleSearch
@@ -166,7 +166,6 @@ def get_results_paragraphs_multi_process(search_term, serp_api_token, url=None):
         paragraph_sources += [urls[i]] * len(url_paragraphs[i])
     return paragraphs, paragraph_sources
 
-<<<<<<< HEAD
 def get_results_paragraphs_from_paper(paper_pii):
     """Given a query, retrieve relevant paragraphs from the search results.
     
@@ -180,10 +179,8 @@ def get_results_paragraphs_from_paper(paper_pii):
     paragraph_sources = "1"
     return paragraphs, paragraph_sources
 
-=======
->>>>>>> parent of 8978d6c (udpated)
 
-def embedding_search(paragraphs, paragraph_sources, search_term, co, model="multilingual-22-12"):
+def embedding_search(paragraphs, paragraph_sources, search_term, co, model="large"):
     """Embed paragraphs and search for the closest ones to a query."""
 
     embeddings = co.embed(texts=paragraphs + [search_term], model=model, truncate="LEFT").embeddings

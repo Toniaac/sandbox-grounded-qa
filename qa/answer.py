@@ -101,7 +101,7 @@ def answer_with_paper(question,
                         co,
                         chat_history="",
                         model='command-xlarge-nightly',
-                        embedding_model="multilingual-22-12",,
+                        embedding_model="large",
                         n_paragraphs=1,
                         verbosity=0):
     """Generates completion based on search results."""
@@ -118,7 +118,7 @@ def answer_with_paper(question,
 
     results = results[-n_paragraphs:]
     context = "\n".join([r[0] for r in results])
-
+    print(results)
     if verbosity:
         pretty_print("OKCYAN", "relevant result context: " + context)
 
