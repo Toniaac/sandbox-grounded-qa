@@ -110,7 +110,6 @@ def answer_with_paper(question,
     if not paragraphs:
         return ("", "", "")
     sample_answer = get_sample_answer(question, co)
-
     results = embedding_search(paragraphs, paragraph_sources, sample_answer, co, model=embedding_model)
 
     if verbosity > 1:

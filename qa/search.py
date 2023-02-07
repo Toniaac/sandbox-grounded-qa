@@ -176,9 +176,7 @@ def get_results_paragraphs_from_paper(paper_pii):
     """
     df = pd.read_csv(paper_pii+'.csv')
     paragraphs = list(df['paragraphs'])
-    paragraph_sources = []
-    for i in range(len(df)):
-        paragraph_sources.append(df['paragraphs'][i])
+    paragraph_sources = "1"
     return paragraphs, paragraph_sources
 
 
