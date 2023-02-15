@@ -7,7 +7,7 @@
 # level of this repository.
 
 import numpy as np
-
+import pandas as pd
 from qa.model import get_sample_answer
 from qa.search import embedding_search, get_results_paragraphs_from_paper
 from qa.util import pretty_print
@@ -106,22 +106,26 @@ def answer_with_paper(question,
                         verbosity=0):
     """Generates completion based on search results."""
 
-    paragraphs, paragraph_sources = get_results_paragraphs_from_paper(paper_pii)
+    paragraphs = get_results_paragraphs_from_paper(paper_pii)
     if not paragraphs:
         return ("", "", "")
     sample_answer = get_sample_answer(question, co)
     #print('Sample answer: ', sample_answer)
-    results = embedding_search(paragraphs, paragraph_sources, sample_answer, co, model=embedding_model)
+    results = embedding_search(paragraphs, sample_answer, co, model=embedding_model)
+    
     if verbosity > 1:
         pprint_results = "\n".join([r[0] for r in results])
         pretty_print("OKGREEN", f"all search result context: {pprint_results}")
 
     results = results[-n_paragraphs:]
-    context = "\n".join([r[0] for r in results])
+    #print('Results: ', results)
+    df = pd.read_csv(paper_pii+'.csv')
+    context = "The title of the paper is: " + df['titles'][0] + "\n" + "The abstract of the paper is: " + df['paragraphs'][0] + "\n"
+    context += "\n".join([r[0] for r in results])
     #print("Context: ", context)
     if verbosity:
         pretty_print("OKCYAN", "relevant result context: " + context)
 
     response = answer(question, context, co, chat_history=chat_history, model=model)
 
-    return (response, [r[1] for r in results], [r[0] for r in results])
+    return (response, paper_pii, [r[0] for r in results])

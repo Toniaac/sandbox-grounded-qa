@@ -175,15 +175,14 @@ def get_results_paragraphs_from_paper(paper_pii):
     """
     df = pd.read_csv(paper_pii+'.csv')
     paragraphs = list(df['paragraphs'])
-    paragraph_sources = paragraphs
-    return paragraphs, paragraph_sources
+    return paragraphs
 
 
-def embedding_search(paragraphs, paragraph_sources, search_term, co, model="large"):
+def embedding_search(paragraphs, search_term, co, model="large"):
     """Embed paragraphs and search for the closest ones to a query."""
 
     embeddings = co.embed(texts=paragraphs + [search_term], model=model, truncate="LEFT").embeddings
     paragraph_embeddings = embeddings[:-1]
     search_embedding = embeddings[-1]
     distances = [cosine_similarity(x, search_embedding) for x in paragraph_embeddings]
-    return sorted(list(zip(paragraphs, paragraph_sources, distances)), key=lambda x: x[2])
+    return sorted(list(zip(paragraphs, distances)), key=lambda x: x[1])

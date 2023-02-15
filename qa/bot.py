@@ -9,7 +9,7 @@
 from sys import settrace
 
 import cohere
-
+import pandas as pd
 from qa.answer import answer_with_paper
 from qa.model import get_contextual_search_query
 from qa.util import pretty_print
@@ -30,14 +30,17 @@ class GroundedQaBot():
     def set_chat_history(self, chat_history):
         self._chat_history = chat_history
 
-    def answer(self, question, verbosity=0, n_paragraphs=2, model='command-xlarge-nightly'):
+    def answer(self, question, verbosity=0, n_paragraphs=1, model='xlarge'):
         """Answer a question, based on recent conversational history."""
-
+        paper_pii = "S1359645421009137"
+        df = pd.read_csv(paper_pii+'.csv')
+        self.chat_history.append("user: " + "What is the name of the paper?")
+        self.chat_history.append("bot: " + df['titles'][0])
+        self.chat_history.append("user: " + "What is the abstract of the paper?")
+        self.chat_history.append("bot: " + df['paragraphs'][0])
         self.chat_history.append("user: " + question)
-
         history = "\n".join(self.chat_history[-6:])
         question = get_contextual_search_query(history, self._co, verbosity=verbosity)
-
         # answer_text, source_urls, source_texts = answer_with_search(question,
         #                                                             self._co,
         #                                                             self._serp_api_key,
@@ -46,8 +49,9 @@ class GroundedQaBot():
         #                                                             model=model,
         #                                                             n_paragraphs=n_paragraphs)
         answer_text, source_urls, source_texts = answer_with_paper(question,
-                                                                    paper_pii = "S1359645421009137",
+                                                                    paper_pii = paper_pii,
                                                                     co = self._co,
+                                                                    chat_history=self.chat_history,
                                                                     verbosity=verbosity,
                                                                     model=model,
                                                                     n_paragraphs=n_paragraphs)                                                                    
