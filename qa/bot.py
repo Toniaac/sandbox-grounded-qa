@@ -30,7 +30,7 @@ class GroundedQaBot():
     def set_chat_history(self, chat_history):
         self._chat_history = chat_history
 
-    def answer(self, question, verbosity=0, n_paragraphs=1, model='xlarge'):
+    def answer(self, question, verbosity=0, n_paragraphs=2, model='command-xlarge-nightly'):
         """Answer a question, based on recent conversational history."""
 
         self.chat_history.append("user: " + question)

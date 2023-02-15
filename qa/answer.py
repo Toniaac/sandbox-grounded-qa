@@ -24,7 +24,7 @@ def trim_stop_sequences(s, stop_sequences):
 
 def answer(question, context, co, model, chat_history=""):
     """Answer a question given some context."""
-
+    print(model)
     if 'command' in model:
         prompt = (
             f'read the paragraph below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
@@ -110,16 +110,15 @@ def answer_with_paper(question,
     if not paragraphs:
         return ("", "", "")
     sample_answer = get_sample_answer(question, co)
-    print('Sample answer: ', sample_answer)
+    #print('Sample answer: ', sample_answer)
     results = embedding_search(paragraphs, paragraph_sources, sample_answer, co, model=embedding_model)
-
     if verbosity > 1:
         pprint_results = "\n".join([r[0] for r in results])
         pretty_print("OKGREEN", f"all search result context: {pprint_results}")
 
     results = results[-n_paragraphs:]
     context = "\n".join([r[0] for r in results])
-    print("Context: ", context)
+    #print("Context: ", context)
     if verbosity:
         pretty_print("OKCYAN", "relevant result context: " + context)
 
