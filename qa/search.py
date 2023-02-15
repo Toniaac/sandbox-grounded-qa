@@ -14,7 +14,6 @@ from multiprocessing import Pool, TimeoutError
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
-from serpapi import GoogleSearch
 
 from qa.util import pretty_print
 
@@ -176,7 +175,7 @@ def get_results_paragraphs_from_paper(paper_pii):
     """
     df = pd.read_csv(paper_pii+'.csv')
     paragraphs = list(df['paragraphs'])
-    paragraph_sources = "1"
+    paragraph_sources = paragraphs
     return paragraphs, paragraph_sources
 
 

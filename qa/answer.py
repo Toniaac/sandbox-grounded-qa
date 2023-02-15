@@ -9,7 +9,7 @@
 import numpy as np
 
 from qa.model import get_sample_answer
-from qa.search import embedding_search, get_results_paragraphs_multi_process, get_results_paragraphs_from_paper
+from qa.search import embedding_search, get_results_paragraphs_from_paper
 from qa.util import pretty_print
 
 
@@ -49,8 +49,8 @@ def answer(question, context, co, model, chat_history=""):
     prompt = "".join(co.tokenize(text=prompt).token_strings[-1900:])
     prediction = co.generate(model=model,
                              prompt=prompt,
-                             max_tokens=100,
-                             temperature=0.3,
+                             max_tokens=200,
+                             temperature=0.2,
                              stop_sequences=stop_sequences,
                              num_generations=num_generations,
                              return_likelihoods="GENERATION")
@@ -100,7 +100,7 @@ def answer_with_paper(question,
                         paper_pii,
                         co,
                         chat_history="",
-                        model='command-xlarge-nightly',
+                        model='xlarge',
                         embedding_model="large",
                         n_paragraphs=1,
                         verbosity=0):
@@ -110,6 +110,7 @@ def answer_with_paper(question,
     if not paragraphs:
         return ("", "", "")
     sample_answer = get_sample_answer(question, co)
+    print('Sample answer: ', sample_answer)
     results = embedding_search(paragraphs, paragraph_sources, sample_answer, co, model=embedding_model)
 
     if verbosity > 1:
@@ -118,7 +119,7 @@ def answer_with_paper(question,
 
     results = results[-n_paragraphs:]
     context = "\n".join([r[0] for r in results])
-    print(results)
+    print("Context: ", context)
     if verbosity:
         pretty_print("OKCYAN", "relevant result context: " + context)
 

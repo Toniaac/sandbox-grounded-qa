@@ -10,7 +10,7 @@ from sys import settrace
 
 import cohere
 
-from qa.answer import answer_with_search, answer_with_paper
+from qa.answer import answer_with_paper
 from qa.model import get_contextual_search_query
 from qa.util import pretty_print
 
@@ -18,9 +18,8 @@ from qa.util import pretty_print
 class GroundedQaBot():
     """A class yielding Grounded question-answering conversational agents."""
 
-    def __init__(self, cohere_api_key, serp_api_key):
+    def __init__(self, cohere_api_key):
         self._cohere_api_key = cohere_api_key
-        self._serp_api_key = serp_api_key
         self._chat_history = []
         self._co = cohere.Client(self._cohere_api_key)
 
