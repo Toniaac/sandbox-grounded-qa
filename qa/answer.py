@@ -24,16 +24,28 @@ def trim_stop_sequences(s, stop_sequences):
 
 def answer(question, context, co, model, chat_history=""):
     """Answer a question given some context."""
-    print(model)
+    #print(model)
     if 'command' in model:
         prompt = (
-            f'read the paragraph below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
+            f'read the paragraphs below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
             f"\n"
             f"Context:\n"
             f"{ context }\n"
             f"\n"
             f"Question: { question }\n"
             "Answer:")
+        if chat_history:
+            prompt = (
+                f'read the paragraphs and chat history below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
+                f"\n"
+                f"Context:\n"
+                f"{ context }\n"
+                f"\n"
+                f"Chat Log:\n"
+                f"{ chat_history }\n"
+                f"\n"
+                f"Question: { question }\n"
+                "Answer:")
         stop_sequences = []
 
     else:
@@ -50,7 +62,7 @@ def answer(question, context, co, model, chat_history=""):
     prediction = co.generate(model=model,
                              prompt=prompt,
                              max_tokens=200,
-                             temperature=0.2,
+                             temperature=0.5,
                              stop_sequences=stop_sequences,
                              num_generations=num_generations,
                              return_likelihoods="GENERATION")
@@ -120,8 +132,8 @@ def answer_with_paper(question,
     results = results[-n_paragraphs:]
     #print('Results: ', results)
     df = pd.read_csv(paper_pii+'.csv')
-    context = "The title of the paper is: " + df['titles'][0] + "\n" + "The abstract of the paper is: " + df['paragraphs'][0] + "\n"
-    context += "\n".join([r[0] for r in results])
+    #context = "The title of the paper is: " + df['titles'][0] + "\n" + "The abstract of the paper is: " + df['paragraphs'][0] + "\n"
+    context = "\n".join([r[0] for r in results])
     #print("Context: ", context)
     if verbosity:
         pretty_print("OKCYAN", "relevant result context: " + context)
