@@ -17,7 +17,7 @@ from qa.util import pretty_print
 _DATA_DIRNAME = os.path.join(os.path.dirname(__file__), "prompt_data")
 
 
-def get_contextual_search_query(history, co, model="xlarge", verbosity=0):
+def get_contextual_search_query(history, co, model="command-xlarge-nightly", verbosity=0):
     """Adds message history context to user query."""
 
     prompt_path = os.path.join(_DATA_DIRNAME, "get_contextual_search_query.prompt")
