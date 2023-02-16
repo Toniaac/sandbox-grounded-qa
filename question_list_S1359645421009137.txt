@@ -1,0 +1,22 @@
+Can you give a summary of the paper?
+What’s the motivation?
+What’s the objective?
+What are the key findings?
+What’s hydrogen embrittlement?
+What is the alloy system considered?
+What are the compositions considered?
+How to increase the hydrogen embrittlement resistance?
+What are the underlying mechanisms of hydrogen embrittlement resistance in high-entropy alloys?
+Describe how the authors performed their study.
+What are the computational methods used in this study?
+What are the experimental methods used in this study?
+What are the synthesis methods used in this study?
+What technique is used to determine the saddle point configuration?
+What is the definition of the hydrogen solution energy?
+Describe the detailed DFT settings.
+What is the density of the k point grid used in DFT calculations?
+What’s the WOA method?
+What does WOA stand for?
+What is the objective of using the WOA method?
+How is the H diffusion coefficient calculated?
+What are the critical sites of the HEA atomic structures?
