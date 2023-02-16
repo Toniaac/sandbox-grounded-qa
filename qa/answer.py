@@ -36,7 +36,7 @@ def answer(question, context, co, model, chat_history=""):
             "Answer:")
         if chat_history:
             prompt = (
-                f'read the paragraphs and chat history below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
+                f'read the context and chat history below and answer the question, if the question cannot be answered based on the context alone, write "sorry i had trouble answering this question, based on the information i found\n'
                 f"\n"
                 f"Context:\n"
                 f"{ context }\n"
@@ -58,11 +58,11 @@ def answer(question, context, co, model, chat_history=""):
         stop_sequences = ["\n"]
 
     num_generations = 4
-    prompt = "".join(co.tokenize(text=prompt).token_strings[-1900:])
+    prompt = "".join(co.tokenize(text=prompt).token_strings[-1800:])
     prediction = co.generate(model=model,
                              prompt=prompt,
                              max_tokens=200,
-                             temperature=0.5,
+                             temperature=0.4,
                              stop_sequences=stop_sequences,
                              num_generations=num_generations,
                              return_likelihoods="GENERATION")
