@@ -174,7 +174,7 @@ def get_results_paragraphs_from_paper(paper_pii):
     a list, which is returned.
     """
     df = pd.read_csv(paper_pii+'.csv')
-    paragraphs = list(df['paragraphs'])
+    paragraphs = list(df['paragraphs'][1:])
     return paragraphs
 
 

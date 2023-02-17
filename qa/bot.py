@@ -33,14 +33,15 @@ class GroundedQaBot():
     def answer(self, question, verbosity=0, n_paragraphs=1, model='command-xlarge-nightly'):
         """Answer a question, based on recent conversational history."""
         paper_pii = "S1359645421009137"
-        if not self.chat_history:
-            df = pd.read_csv(paper_pii+'.csv')
-            self.chat_history.append("user: " + "What is the title of the paper?")
-            self.chat_history.append("bot: " + df['titles'][0])
-            self.chat_history.append("user: " + "What is the abstract of the paper?")
-            self.chat_history.append("bot: " + df['paragraphs'][0])
+        #if not self.chat_history:
+        #    df = pd.read_csv(paper_pii+'.csv')
+        #    self.chat_history.append("user: " + "What is the title of the paper?")
+        #    self.chat_history.append("bot: " + df['titles'][0])
+        #    self.chat_history.append("user: " + "What is the abstract of the paper?")
+        #    self.chat_history.append("bot: " + df['paragraphs'][0])
         self.chat_history.append("user: " + question)
         history = "\n".join(self.chat_history[-5:])
+        print("history: \n", history)
         question = get_contextual_search_query(history, self._co, verbosity=verbosity)
         # answer_text, source_urls, source_texts = answer_with_search(question,
         #                                                             self._co,
@@ -52,7 +53,7 @@ class GroundedQaBot():
         answer_text, source_urls, source_texts = answer_with_paper(question,
                                                                     paper_pii = paper_pii,
                                                                     co = self._co,
-                                                                    chat_history=self.chat_history,
+                                                                    #chat_history=self.chat_history,
                                                                     verbosity=verbosity,
                                                                     model=model,
                                                                     n_paragraphs=n_paragraphs)                                                                    
